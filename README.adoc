@@ -6,7 +6,7 @@ This repository provides the logic to build an Antora courseware repository into
 
 == Usage
 
-. Create a new content repository and publish it at a public Github compatible URL. See below for content repository requirements.
+. Create a new content repository and publish it at a public Github compatible URL. See https://github.com/wkulhanek/bookbag-rhtr2020 for an example. More documentation to follow.
 . Create a new container image
 +
 [source,sh]
