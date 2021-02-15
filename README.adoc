@@ -28,7 +28,8 @@ podman build --build-arg ANTORA_SOURCE=$ANTORA_SOURCE --build-arg ANTORA_BRANCH=
 docker build --build-arg ANTORA_SOURCE=$ANTORA_SOURCE --build-arg ANTORA_BRANCH=$ANTORA_BRANCH -t wkulhanek/bookbag-content:latest .
 ----
 
-. Run the image passing any environment variables as necessary.
+. Environment variables can be either passed individually or aggregated into one variable containing a JSON array.
+.. For individual variables run the image passing any environment variables as necessary.
 +
 [source,sh]
 ----
@@ -42,6 +43,18 @@ docker run --name bookbag \
            --env guid="$guid" --env ocp_username="$ocp_username" \
            --env jenkins_url="$jenkins_url" --env gitea_url="$gitea_url" \
            --env login_command="${login_command}" \
+       wkulhanek/bookbag-content:latest
+----
+
+.. For aggregated JSON run the image passing one variable *WORKSHOP_VARS* containing a JSON array of variables.
++
+[source,sh]
+----
+WORKSHOP_VARS='{"guid": "wkosp", "ocp_username": "wkulhane-redhat.com", "jenkins_url": "https://homework-jenkins-gpte-jenkins.apps.shared-na4.na4.openshift.opentlc.com", "gitea_url": "https://homework-gitea.apps.shared-na4.na4.openshift.opentlc.com", "login_command": "oc login -u wkulhane-redhat.com -p <Your OpenTLC password> https://api.shared-na4.na4.openshift.opentlc.com:8443"}'
+
+docker run --name bookbag \
+           --rm --publish 8080:8080 \
+           --env WORKSHOP_VARS="$WORKSHOP_VARS"
        wkulhanek/bookbag-content:latest
 ----
 
@@ -69,7 +82,10 @@ ANTORA_BRANCH=main
 oc new-build --name bookbag --strategy=docker https://github.com/wkulhanek/bookbag-content --build-arg ANTORA_SOURCE=${ANTORA_SOURCE} --build-arg ANTORA_BRANCH=${ANTORA_BRANCH}
 ----
 
-. Once the build completes create a new Deployment passing environment variables as necessary:
+. Once the build completes create a new Deployment using the created container image.
++
+Environment variables can be either passed individually or aggregated into one variable containing a JSON array.
+.. For individual variables pass any environment variables as necessary.
 +
 [source,sh]
 ----
@@ -83,6 +99,15 @@ oc new-app bookbag \
    --env guid="$guid" --env ocp_username="$ocp_username" \
    --env jenkins_url="$jenkins_url" --env gitea_url="$gitea_url" \
    --env login_command="${login_command}"
+----
+
+.. For aggregated JSON pass one variable *WORKSHOP_VARS* containing a JSON array of variables.
++
+[source,sh]
+----
+WORKSHOP_VARS='{"guid": "wkosp", "ocp_username": "wkulhane-redhat.com", "jenkins_url": "https://homework-jenkins-gpte-jenkins.apps.shared-na4.na4.openshift.opentlc.com", "gitea_url": "https://homework-gitea.apps.shared-na4.na4.openshift.opentlc.com", "login_command": "oc login -u wkulhane-redhat.com -p <Your OpenTLC password> https://api.shared-na4.na4.openshift.opentlc.com:8443"}'
+
+oc new-app bookbag --env WORKSHOP_VARS=${WORKSHOP_VARS}
 ----
 
 . Expose the Route
