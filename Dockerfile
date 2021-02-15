@@ -2,9 +2,9 @@ FROM registry.access.redhat.com/ubi8/nodejs-14:latest
 
 # Default Variables
 # Can be overridden when building the container
-ARG ANTORA_SOURCE https://github.com/redhat-scholars/openshift-starter-guides.git
+ARG ANTORA_SOURCE=https://github.com/redhat-scholars/openshift-starter-guides.git
     # Branch to check out
-ARG ANTORA_BRANCH ocp-4.6
+ARG ANTORA_BRANCH=ocp-4.6
 
 USER root
 
