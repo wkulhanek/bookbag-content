@@ -8,25 +8,17 @@ pushd $HOME/antora/documentation
 
 # Retrieve all Environment Variables
 echo "Performing Variable substitution..."
-export ENV_VARS=$(env)
-for VARIABLE in $ENV_VARS;
+OLD_IFS=$IFS
+unset IFS
+for VARIABLE_KEY in $(compgen -e)
 do
-  # Get KEY and VALUE from variable
-  # GUID=wkosp -> KEY=GUID, VALUE=wkosp
-  IFS="="
-  read -ra VARIABLE_KEY_VALUE <<< ${VARIABLE}
-
-  # Save in environment variables
-  # ,, converts the key to lower case
-  # VARIABLE_KEY=${VARIABLE_KEY_VALUE[0],,}
-  VARIABLE_KEY=${VARIABLE_KEY_VALUE[0]}
-  VARIABLE_VALUE=${VARIABLE_KEY_VALUE[1]}
+  VARIABLE_VALUE=${!VARIABLE_KEY}
   # echo "Found variable with key ${VARIABLE_KEY} and value ${VARIABLE_VALUE}\n"
 
   # Find all *.adoc source files and replace the variables
   find . -name *.adoc -exec awk -i inplace -v key="%${VARIABLE_KEY}%" -v value="${VARIABLE_VALUE}" '{ gsub(key, value)}1' {} +
 done
-IFS=" "
+IFS=$OLD_IFS
 popd
 
 # Build Antora Site

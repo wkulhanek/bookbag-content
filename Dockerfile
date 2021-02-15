@@ -37,4 +37,3 @@ EXPOSE 8080
 STOPSIGNAL SIGQUIT
 
 ENTRYPOINT ["/bin/container-entrypoint.sh"]
-# CMD ["nginx", "-g", "daemon off;"]
