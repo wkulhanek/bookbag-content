@@ -85,6 +85,7 @@ oc new-build --name bookbag --strategy=docker https://github.com/wkulhanek/bookb
 . Once the build completes create a new Deployment using the created container image.
 +
 Environment variables can be either passed individually or aggregated into one variable containing a JSON array.
+
 .. For individual variables pass any environment variables as necessary.
 +
 [source,sh]
