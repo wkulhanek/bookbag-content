@@ -27,5 +27,5 @@ antora dev-site.yml
 popd
 
 # Now start NGINX
-echo "Starting nxinx..."
+echo "Starting nginx..."
 exec /usr/sbin/nginx -g "daemon off;" $@
