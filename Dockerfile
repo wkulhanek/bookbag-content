@@ -20,7 +20,9 @@ RUN dnf -y update && \
 
 COPY ./bin/container-entrypoint.sh /bin
 COPY ./nginx.conf /etc/nginx/nginx.conf
-
+RUN curl -L -o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 && \
+    chown root:root /usr/bin/jq && \
+    chmod 775 /usr/bin/jq
 RUN mkdir $HOME/antora && \
     pushd $HOME/antora && \
     git clone $ANTORA_SOURCE $HOME/antora && \
