@@ -22,10 +22,10 @@ ANTORA_SOURCE=https://github.com/wkulhanek/bookbag-rhtr2020
 ANTORA_BRANCH=main
 
 # Build the container image using podman
-podman build --build-arg ANTORA_SOURCE=$ANTORA_SOURCE --build-arg ANTORA_BRANCH=$ANTORA_BRANCH -t wkulhanek/bookbag-content:latest .
+podman build --build-arg ANTORA_SOURCE=$ANTORA_SOURCE --build-arg ANTORA_BRANCH=$ANTORA_BRANCH -t bookbag-content:latest .
 
 # Or build the container image using Docker if podman is not available (e.g. on MacOS)
-docker build --build-arg ANTORA_SOURCE=$ANTORA_SOURCE --build-arg ANTORA_BRANCH=$ANTORA_BRANCH -t wkulhanek/bookbag-content:latest .
+docker build --build-arg ANTORA_SOURCE=$ANTORA_SOURCE --build-arg ANTORA_BRANCH=$ANTORA_BRANCH -t bookbag-content:latest .
 ----
 
 . Environment variables can be either passed individually or aggregated into one variable containing a JSON array.
@@ -43,7 +43,7 @@ docker run --name bookbag \
            --env guid="$guid" --env ocp_username="$ocp_username" \
            --env jenkins_url="$jenkins_url" --env gitea_url="$gitea_url" \
            --env login_command="${login_command}" \
-       wkulhanek/bookbag-content:latest
+       bookbag-content:latest
 ----
 
 .. For aggregated JSON run the image passing one variable *WORKSHOP_VARS* containing a JSON array of variables.
@@ -55,7 +55,7 @@ WORKSHOP_VARS='{"guid": "wkosp", "ocp_username": "wkulhane-redhat.com", "jenkins
 docker run --name bookbag \
            --rm --publish 8080:8080 \
            --env WORKSHOP_VARS="$WORKSHOP_VARS"
-       wkulhanek/bookbag-content:latest
+       bookbag-content:latest
 ----
 
 . Access http://localhost:8080 to test your documentation.
